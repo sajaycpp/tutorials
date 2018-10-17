@@ -1,0 +1,35 @@
+
+
+
+Features
+
+Chat History
+Msg status
+Group msging
+Media
+clear history [date wise]
+Add contact
+staring
+Date wise import
+forward
+profile img
+search 
+delete
+
+stared_table
+
+user_table
+u_id	name	date	email 	mob		profile_char
+
+Message_table
+mg_id us_id 	thread	read_status		date[thread staring]	
+
+board_Message_table
+br_id mg_id	us_id[Who bring the msg], date[when]	
+
+board_member_table
+br_id	u_id	admin	title
+
+group_member_activity
+
+br_id 	joiner_id	joinee_id	activity	actvty_date
