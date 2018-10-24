@@ -53,11 +53,11 @@ function execute_query($sql, $conn){
 	
 	$result = '';
 	foreach( $sql as $key => $queryAry ){
-		foreach( $queryAry as $query ){
+		foreach( $queryAry as $query ){ 
 			$result = $conn->query( $query );
 		}
 	}
-	var_dump($result);
+	//var_dump($result);
 	return $result;
 }
 
@@ -80,26 +80,30 @@ function getRequestData($key){
 }
 
 function initialise_session($conn){
-	if( !defined($_SESSION) && getRequestData('mob') != '' ){
-		
-		$sql = fetch_query('userSession');
-		$result = execute_query($sql, $conn);
-		if ($result->num_rows && $result->num_rows > 0) {
-			session_start();
-			$_SESSION['user'] = array();
-			$_SESSION['user']['name'] = $result->name;
-			$_SESSION['user']['mob'] = $result->mob;
-			$_SESSION['user']['id'] = $result->u_id;
-			$_SESSION['user']['email'] = $result->email;
-			$_SESSION['user']['profile_char'] = $result->profile_char;
+	if ( session_status() == PHP_SESSION_NONE ) { 
+		if ( getRequestData('mob') != '') { 
+			$sql = fetch_query('userSession');
+			$result = execute_query($sql, $conn);
+			if ($result->num_rows && $result->num_rows > 0) {
+				session_start();
+				$_SESSION['user'] = array();
+				while($row = $result->fetch_assoc()) {
+				  
+				$_SESSION['user']['name'] = $row['name'];
+				$_SESSION['user']['mob'] = $row['mob'];
+				$_SESSION['user']['id'] = $row['u_id'];
+				$_SESSION['user']['email'] = $row['email'];
+				$_SESSION['user']['profile_char'] = $row['profile_char'];
+				}
+			}
 		}
 	}
 }
 
 function getUserSessionData($key){
 	
-	if( !defined($_SESSION) ){
-		return null;
+	if (session_status() == PHP_SESSION_NONE) {
+		session_start();
 	}
 	if( !isset($_SESSION['user']) ){
 		return null;
@@ -123,9 +127,10 @@ function getUserSessionData($key){
 
 function userJsonData($conn){
 	initialise_session($conn);
+	//var_dump($_SESSION['user']);
 	$user = getUserSessionData('');
 	if( !isset($user) ){
 		return '{}';
 	}
-	return '{mob:' . $user["mob"] . ', name:' . $user["name"] . ', id:' . $user["id"] . ', email:' . $user["email"] . ', profile_char:' . $user["profile_char"] . '}';
+	return '{mob:"' . $user["mob"] . '", name:"' . $user["name"] . '", id:"' . $user["id"] . '", email:"' . $user["email"] . '", profile_char:"' . $user["profile_char"] . '"}';
 }
