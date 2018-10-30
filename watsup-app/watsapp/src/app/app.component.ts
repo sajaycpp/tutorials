@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ChatService } from './chat.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @Input() public userJsonData;
   title = 'Wats-Up';
+  constructor(public initialUserData: ChatService  ) { }
+
+  ngOnInit(){
+    this.initialUserData = this.userJsonData;
+  }
 }

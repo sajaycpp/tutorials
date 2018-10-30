@@ -11,10 +11,12 @@ export class ChatWindowComponent implements OnInit {
 
   public messageFrom = [];
   public receiver_id: Number = 0;
+  public userJson: any = '';
   constructor(private _dataProvider: DataproviderService, private route: ActivatedRoute ) { }
 
   ngOnInit() {
     this.receiver_id = parseInt(this.route.snapshot.paramMap.get('id'));
+    //this.userJson = userJsonData;
     this.messagesFrom(this.receiver_id);
   }
 
@@ -22,6 +24,8 @@ export class ChatWindowComponent implements OnInit {
     this._dataProvider.fetchMessages(id)
     .subscribe(data => this.messageFrom = data)
   }
+
+
   
   postMessage(inputElmt){
     this._dataProvider.saveMessage(inputElmt.value, this.receiver_id)

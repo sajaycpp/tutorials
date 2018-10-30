@@ -3,7 +3,7 @@
   <div class="bg-light" style="min-height: 80%;  position: fixed; overflow: scroll; width: 500px; padding: 10px 26px;">
     <div class="col-sm-12 "  *ngFor="let msg of messageFrom">
       <p>
-        <span class="badge badge-secondary">{{msg.thread}}</span>
+        <span class="badge " [class.badge-secondary]="userJsonData.id == msg.sender_id">{{msg.thread}}</span>
       </p>
       </div>
       <div  style="position: absolute; bottom: 0" >

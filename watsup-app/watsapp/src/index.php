@@ -18,10 +18,8 @@ require_once('includes/functions.php');
   
 </head>
 <body>
-  <script>
-  var userJsonData = <?=userJsonData($conn)?>
-  </script>
-  <app-root></app-root>
+  
+  <app-root [userJsonData]="<?=userJsonData($conn)?>"></app-root>
 </body>
 </html>
 - 

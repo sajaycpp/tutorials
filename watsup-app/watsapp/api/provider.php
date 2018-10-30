@@ -9,5 +9,4 @@ $sql = fetch_query($_REQUEST['subject']);
 $result = execute_query($sql, $conn);
 
 echo stringify_result($result);
-echo userJsonData($conn);
 mysqli_close($conn);

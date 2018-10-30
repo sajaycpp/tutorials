@@ -17,7 +17,7 @@ function fetch_query($identifier){
 						break;
 						
 		case "contacts":
-						$sql = ["select" => ["SELECT * FROM user"]];
+						$sql = ["select" => ["SELECT * FROM user WHERE u_id != '" .getUserSessionData('id'). "'"]];
 						break;
 						
 		case "messages":
@@ -28,7 +28,8 @@ function fetch_query($identifier){
 						
 		case "messageFrom":
 						$sql = ["select" => [
-						"SELECT  thread  FROM message where message.sender_id = " . getRequestData('sender_id') ] ];
+						"SELECT sender_id, us_id, thread FROM message, board_message where message.mg_id = board_message.mg_id and ( message.sender_id = '" .getUserSessionData('id'). "' and board_message.us_id = '" .getRequestData('sender_id'). "') or ( message.sender_id = '" .getRequestData('sender_id'). "' and board_message.us_id = '" .getUserSessionData('id'). "' )" ] 
+						];
 						break;
 						
 		case "postMessage": 
