@@ -1,3 +1,22 @@
+/*
+https://stackblitz.com/edit/rxjs-cczzww?devtoolsheight=60
+
+import { from } from 'rxjs';
+import { mapTo, map, filter } from 'rxjs/operators';
+
+
+const source = from([{ type: 'villages', payload: 'Trpa, Prvm, mvvtp' },
+{ type: 'cities', payload: 'ekm, tcr, sbc' }
+]).pipe(
+  filter( x => x.type == 'cities'),
+  map(x => ({type: 'mapped', payload: x.payload}) ),
+  mapTo('H')
+);
+
+source.subscribe(x => console.log(x));
+
+*/
+
 
 function myObservable(aryToObserve){
 	
